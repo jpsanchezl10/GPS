@@ -68,7 +68,7 @@ struct ContentView: View {
                     //Text(lat)
                     //Text(lon)
                     Spacer()
-                    Image(uiImage: "https://maps.googleapis.com/maps/api/staticmap?center=\(lat),\(long)&zoom=16&size=400x400&key=AIzaSyClGOTMpV2kKF27bxAo6nm3pIq7zmW69Fw&markers=\(lat),\(long)".load())
+                    Image(uiImage: "https://maps.googleapis.com/maps/api/staticmap?center=\(lat),\(long)&zoom=16&size=400x400&key=YOURKEYHERE=\(lat),\(long)".load())
                         .resizable()
                         .frame(width: 400, height: 400)
                     
