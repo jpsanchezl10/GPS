@@ -1,0 +1,111 @@
+импорт SwiftUI
+
+строка расширения{
+    функция загрузки() ->UIImage {
+        
+        делать{
+            //строка для URL-адреса
+            guard let url = URL(строка: self) else{
+                //пустое изображение, если неверный URL
+возвращает UIImage()
+            }
+            //url-адрес для данных
+            пусть данные : Данные = попробуйте данные(содержимое: url)
+            
+            //создать объект uuimage из данных
+            вернуть UIImage(данные: данные) ?? UIImage()
+            
+        }поймать{
+            
+            
+        }
+        вернуть UIImage()
+        
+    }
+}
+
+
+
+структура contentView: Просмотр {
+   // @Государственная частная переменная quoteData : QuoteData?
+    
+    @Государственная частная переменная quoteData: QuoteData? = Цитируемые данные(широта: "21.0938",длина: "86.5051") // Токио
+    
+    @State var state = ""
+    
+    @State var apiURL = ""
+
+
+
+    
+    тело var: некоторый вид {
+        
+       
+        ZStack{
+            VStack{
+                Текст ("GPS").выделен жирным шрифтом()
+                    .Цвет переднего плана(.красный)
+                    .FontWeight(.heavy)
+                    .шрифт(.заголовок)
+                
+                
+                Текст(данные в кавычках?.лат ?? "широта" )
+                Текст(данные в кавычках?.долго?? "долгота")
+                
+                
+                
+                Распорка()
+                
+                если let lat = quoteData?.lat, пусть long = quoteData?.длинный {
+             
+                    //Текст(лат)
+                    //Текст(lon)
+                    Распорка()
+                    Изображение(UIImage: "https://maps.googleapis.com/maps/api/staticmap?center=\(lat),\(long)&zoom=16&size=400x400&key=YOURKEYHERE=\(lat),\(long)".load())
+                        .изменяемый размер()
+                        .рамка (ширина: 400, высота: 400)
+                    
+                }
+                
+
+                
+       
+                Распорка()
+                
+                Кнопка ("Трек") {
+                    loadData()
+                    textintro()
+                    
+                }
+                .рамка (ширина: 100, высота: 100)
+                .Цвет переднего плана (серый)
+                .фон (Цвет.синий)
+                .шрифт(.заголовок)
+                
+            }
+        }
+            .заполнение()
+    }
+функция textintro(){
+        self.state = "Localizando ..."
+            
+    }
+    
+    частная функция loadData(){
+        guard let url = URL(строка: "http://gpsanahuac.ngrok.io/cordenadas.json ") еще{
+            вернуть
+        }
+        URLSession.shared.dataTask(с: url){данные , ответ, ошибка в
+            guard пусть данные = данные еще{
+                вернуть
+            }
+            если let decodedData = try? JSONDecoder().decode(QuoteData.self, из: data){
+                DispatchQueue.main.async {
+                    self.quoteData = декодированные данные
+                }
+            }
+        }.резюме()
+        
+    }
+    
+}
